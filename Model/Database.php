@@ -7,20 +7,20 @@ class Database
     private $server = 'localhost';
     private $user = 'root';
     private $password = '';
-    private $dbName = 'testnal';
+    private $dbName = 'test_nal';
 
     //Hàm kết nối CSDL
-    public function connect()
+    function connect()
     {
         $this->conn = mysqli_connect($this->server, $this->user, $this->password, $this->dbName);
 
-        if ($this->conn->connect_error) {
-            die("Máy chủ không thể kết nối");
+        if (!$this->conn) {
+            die("Không thể kết nối");
         }
     }
 
     // Hàm đóng CSDL
-    public function close()
+    function close()
     {
         if ($this->conn) {
             $this->conn->close();
