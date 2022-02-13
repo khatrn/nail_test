@@ -29,6 +29,8 @@
                 loadingSelector: "#loading",
                 lang: "en",
                 token: "",
+                startTimeConst: "00:00",
+                endTimeConst: "23:59",
                 ajaxJsonFetch: "includes/cal_events.php?" + t,
                 ajaxUiUpdate: "includes/cal_update.php?" + t,
                 ajaxEventQuickSave: "?controller=WorkController&action=addEvent&" + t,
@@ -200,9 +202,7 @@
                     calendar.view = o.name,
                     "modal" == c.version && (calendar.quickModal(e, t, a),
                         y(c.calendarSelector).fullCalendar("unselect")),
-                    "month" !== o.name && moment(e._d).format("HH:mm") !== moment(t._d).format("HH:mm") && (y('#event-type option[value="false"]').prop("selected", !0),
-                        y("#event-type-select").show(),
-                        y("#event-type-selected").show())
+                    "month" !== o.name && moment(e._d).format("HH:mm") !== moment(t._d).format("HH:mm") && (y('#event-type option[value="false"]').prop("selected", !0))
                 },
                 eventSources: [c.otherSource, {
                     url: c.ajaxJsonFetch
@@ -459,40 +459,17 @@
                 calendar.quickModal = function(e, t, a) {
                     document.getElementById("modal-form-body").reset(),
                         y("#modal-form-body").html(c.modalFormBody);
-                    var o = moment(e).format("YYYY-MM-DD")
-                        , n = moment(e).format("HH:mm")
-                        , l = moment(t).format("YYYY-MM-DD")
-                        , r = moment(t).format("HH:mm");
-                    if (0 == moment(t).isValid())
-                        l = o,
-                            r = n;
-                    y("#startDate").val(o),
-                        y("#startTime").val(n),
-                        y("#endDate").val(l),
-                        y("#endTime").val(r),
+                        var sd = moment(e).format("YYYY-MM-DD") + 'T' + c.startTimeConst;
+                        var st = moment(e).format("YYYY-MM-DD") + 'T' + c.endTimeConst;
+                        y("#start_date").val(sd),
+                        y("#end_date").val(st),
                         y("#details-body").hide(),
-                        y("#event-type-select").show(),
-                        y("#event-type-selected").hide(),
-                        y("#repeat-type-select").show(),
-                        y("#repeat-type-selected").hide(),
-                        y("#export-event, #delete-event, #edit-event, #save-changes").hide(),
+                        y("#delete-event, #edit-event, #save-changes").hide(),
                         y("#add-event").show().css("width", "100%"),
                         y(".modal-footer").show(),
                         y("#modal-form-body").show(),
                         y("#details-body-title").html(c.newEventText),
                         y(c.modalSelector).modal("show"),
-                        y("#event-type").on("change", function() {
-                            var e = y(this).val();
-                            "false" == e ? (y("#event-type-select").show(),
-                                y("#event-type-selected").show()) : "true" == e && (y("#event-type-select").show(),
-                                y("#event-type-selected").hide())
-                        }),
-                        y("#repeat_select").on("change", function() {
-                            var e = y(this).val();
-                            "no" !== e ? (y("#repeat-type-select").show(),
-                                y("#repeat-type-selected").show()) : "no" == e && (y("#repeat-type-select").show(),
-                                y("#repeat-type-selected").hide())
-                        }),
                         y("#add-event").off().on("click", function(e) {
                             formData = new FormData();
                             0 == y("input[name=work_name]").val().length ? alert(c.emptyForm) :
