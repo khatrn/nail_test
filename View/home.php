@@ -40,7 +40,7 @@
                 <form id="modal-form-body">
                     <p>
                         <label>Work name: </label>
-                        <input class="form-control" name="work_name" value="" type="text">
+                        <input class="form-control" name="work_name" value="" type="text" id="workName">
                     </p>
                     <p>
                         <label>Start date: </label>
@@ -48,11 +48,11 @@
                     </p>
                     <p>
                         <label>End date: </label>
-                        <input type="datetime-local" name="end_date" class="form-control" value="<?= date('Y-m-d\T23:59'); ?>">
+                        <input id="end_date" type="datetime-local" name="end_date" class="form-control" value="<?= date('Y-m-d\T23:59'); ?>">
                     </p>
-                    <p id="event-type-select">
+                    <p>
                         <label>Status: </label>
-                        <select id="event-type" name="status" class="form-control">
+                        <select name="status" class="form-control">
                             <option value="0">Planing</option>
                             <option value="1">Doing</option>
                             <option value="2">Complete</option>
@@ -111,6 +111,7 @@
     </div>
 </div>
 
+<input type="hidden" name="cal_token" id="cal_token" value="<?= md5(uniqid(mt_rand(), true)) ?>" />
 <!---------------------------------------------- THEME ---------------------------------------------->
 
 
@@ -159,7 +160,6 @@
     });
 
 </script>
-
 </body>
 
 <!-- Mirrored from pauloreg.com/d/affc2/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 10 Feb 2022 10:11:10 GMT -->

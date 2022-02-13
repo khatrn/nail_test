@@ -10,17 +10,19 @@ class Database
     private $dbName = 'test_nal';
 
     //Hàm kết nối CSDL
-    function connect()
+    public function __construct()
     {
         $this->conn = mysqli_connect($this->server, $this->user, $this->password, $this->dbName);
+    }
 
-        if (!$this->conn) {
-            die("Không thể kết nối");
-        }
+    public function add($workName, $start_date, $end_date, $status)
+    {
+        $query = "INSERT INTO todolist(work_name, start_date, end_date, status) VALUES ('$workName', '$start_date', '$end_date', $status)";
+        mysqli_query($this->conn, $query);
     }
 
     // Hàm đóng CSDL
-    function close()
+    public function close()
     {
         if ($this->conn) {
             $this->conn->close();

@@ -31,7 +31,7 @@
                 token: "",
                 ajaxJsonFetch: "includes/cal_events.php?" + t,
                 ajaxUiUpdate: "includes/cal_update.php?" + t,
-                ajaxEventQuickSave: "includes/cal_quicksave.php?" + t,
+                ajaxEventQuickSave: "?controller=WorkController&action=addEvent&" + t,
                 ajaxEventDelete: "includes/cal_delete.php?" + t,
                 ajaxEventEdit: "includes/cal_edit_update.php?" + t,
                 ajaxEventExport: "includes/cal_export.php?" + t,
@@ -55,6 +55,7 @@
                 generalFailureMessage: "Failed To Execute Action",
                 ajaxError: "Failed to load content",
                 emptyForm: "Form cannot be empty",
+                errorDate: "End time must be greater than start time",
                 unableToOpenEvent: "Something went wrong. Unable to open event",
                 eventText: "Event: ",
                 repetitiveEventActionText: "This is a repetitive event, what do you want to do?",
@@ -493,10 +494,16 @@
                                 y("#repeat-type-selected").hide())
                         }),
                         y("#add-event").off().on("click", function(e) {
-                            0 == y("input[name=title]").val().length ? alert(c.emptyForm) : (formData = new FormData(y("#modal-form-body").get(0)),
-                            y("#file")[0] && formData.append("file", y("#file")[0].files[0]),
-                                d(formData)),
-                                e.preventDefault()
+                            formData = new FormData();
+                            0 == y("input[name=work_name]").val().length ? alert(c.emptyForm) :
+                                formData.set('work_name',y("input[name=work_name]").val());
+                            0 == (y("input[name=end_date]").val() > y("input[name=start_date]").val()) ? alert(c.errorDate) : (
+                                formData.set('start_date',y("input[name=start_date]").val()),
+                                formData.set('end_date',y("input[name=end_date]").val())
+                            );
+                            formData.set('status',y("select[name=status]").val());
+                            d(formData);
+                            e.preventDefault()
                         })
                 }
             ;
@@ -514,13 +521,12 @@
                     },
                     error: function() {
                         y(".loadingDiv").hide(),
-                            console.log(c.ajaxError)
+                        console.log(c.ajaxError)
                     },
                     success: function(e) {
                         y(".loadingDiv").hide(),
-                            1 == e ? (y(c.modalSelector).modal("hide"),
-                                y(c.calendarSelector).fullCalendar("refetchEvents")) : (alert(c.failureAddEventMessage),
-                                y(".modal-footer").show())
+                        y(c.modalSelector).modal("hide"),
+                        y(c.calendarSelector).fullCalendar("refetchEvents")
                     }
                 })
             }
