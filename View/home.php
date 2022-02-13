@@ -44,11 +44,11 @@
                     </p>
                     <p>
                         <label>Start date: </label>
-                        <input id="start_date" type="datetime-local" name="start_date" class="form-control" value="<?= date('Y-m-d\T00:00') ?>");>
+                        <input id="start_date" type="datetime-local" name="start_date" class="form-control">
                     </p>
                     <p>
                         <label>End date: </label>
-                        <input id="end_date" type="datetime-local" name="end_date" class="form-control" value="<?= date('Y-m-d\T23:59'); ?>">
+                        <input id="end_date" type="datetime-local" name="end_date" class="form-control">
                     </p>
                     <p>
                         <label>Status: </label>
