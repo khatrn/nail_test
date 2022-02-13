@@ -67,7 +67,6 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="export-event" class="btn btn-warning">Export</button>
                 <button type="button" id="delete-event" class="btn btn-danger">Delete</button>
                 <button type="button" id="edit-event" class="btn btn-info">Edit</button>
                 <button type="button" id="add-event" class="btn btn-primary">Add</button>
